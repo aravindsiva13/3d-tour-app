@@ -58,12 +58,15 @@ export default function MapCanvas({ pins, hoveredPinId }: MapCanvasProps) {
     if (hoveredPinId && mapRef.current) {
       const pin = pins.find(p => p.id === hoveredPinId);
       if (pin) {
-        mapRef.current.flyTo({
-          center: [pin.lng, pin.lat],
-          zoom: 15,
-          duration: 1200,
-          essential: true
-        });
+        const map = mapRef.current.getMap();
+        if (map) {
+          map.flyTo({
+            center: [pin.lng, pin.lat],
+            zoom: 15,
+            duration: 1200,
+            essential: true
+          });
+        }
       }
     }
   }, [hoveredPinId, pins]);
