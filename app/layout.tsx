@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Property Microsite",
+  title: "DCC-12spacestudio",
   description: "Interactive real estate experience",
 };
 
