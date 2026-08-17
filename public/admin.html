@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tour CMS Portal</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    :root {
+      --bg-dark: #0f1115;
+      --bg-panel: #181b21;
+      --bg-card: #22262e;
+      --border: #2d333b;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --primary: #2f81f7;
+      --primary-hover: #388bfd;
+      --danger: #f85149;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg-dark); color: var(--text); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+    
+    /* Layout */
+    #app { display: flex; width: 100%; height: 100%; }
+    .sidebar { width: 300px; background: var(--bg-panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+    .editor-panel { width: 400px; background: var(--bg-panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+    .preview-panel { flex: 1; display: flex; flex-direction: column; background: var(--bg-dark); position: relative; }
+    
+    /* Headers */
+    .header { padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg-panel); }
+    .header h2 { margin: 0; font-size: 16px; font-weight: 600; }
+    
+    /* Sidebar Tree */
+    .tree-container { flex: 1; overflow-y: auto; padding: 12px; }
+    .tree-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 6px; cursor: pointer; margin-bottom: 2px; color: var(--text-muted); font-size: 14px; transition: all 0.2s; border: 1px solid transparent; }
+    .tree-item:hover { background: var(--bg-card); color: var(--text); }
+    .tree-item.active { background: rgba(47, 129, 247, 0.1); color: var(--primary); border-color: rgba(47, 129, 247, 0.4); }
+    
+    .tree-item.category { font-weight: 600; }
+    .tree-item.group { padding-left: 24px; font-size: 13px; }
+    .tree-item.item { padding-left: 36px; font-size: 13px; }
+    
+    .add-btn { background: none; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 0 4px; border-radius: 4px; }
+    .add-btn:hover { background: var(--border); color: var(--text); }
+    
+    /* Forms & Inputs */
+    .form-container { padding: 20px; overflow-y: auto; flex: 1; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    input, textarea { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text); padding: 10px; border-radius: 6px; font-family: inherit; font-size: 14px; box-sizing: border-box; }
+    input:focus, textarea:focus { outline: none; border-color: var(--primary); }
+    
+    /* Buttons */
+    .btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.2s; }
+    .btn:hover { background: #2c323b; border-color: #8b949e; }
+    .btn-primary { background: var(--primary); border-color: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+    .btn-danger { background: transparent; border-color: var(--danger); color: var(--danger); }
+    .btn-danger:hover { background: var(--danger); color: white; }
+    .btn-block { width: 100%; margin-top: 10px; }
+    
+    /* Video Area */
+    .video-toolbar { padding: 12px 20px; background: var(--bg-panel); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .video-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px; }
+    video { max-width: 100%; max-height: 100%; border-radius: 8px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); background: #000; }
+    
+    .time-badge { background: var(--bg-card); padding: 4px 12px; border-radius: 20px; font-family: monospace; font-size: 14px; border: 1px solid var(--border); }
+    
+    /* Modals */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); z-index: 100; display: flex; align-items: center; justify-content: center; }
+    .modal { background: var(--bg-panel); width: 600px; max-width: 90%; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; max-height: 90vh; }
+    .modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .modal-body { padding: 20px; overflow-y: auto; display: flex; flex-direction: column; }
+    .modal-body textarea { min-height: 300px; font-family: monospace; font-size: 13px; color: #a5d6ff; line-height: 1.5; }
+    
+    .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); text-align: center; padding: 40px; }
+    
+    .row { display: flex; gap: 12px; }
+    .row > * { flex: 1; }
+    
+    .video-capture-card { background: rgba(47, 129, 247, 0.05); border: 1px solid rgba(47, 129, 247, 0.2); padding: 16px; border-radius: 8px; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <!-- 1. LEFT SIDEBAR: TREE NAVIGATION -->
+  <div class="sidebar">
+    <div class="header">
+      <h2>Tour CMS</h2>
+      <button class="btn" style="padding: 4px 10px; font-size: 12px;" @click="showImport = true">Import</button>
+    </div>
+    
+    <div class="tree-container">
+      <h3 style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Categories</h3>
+      <div v-for="(cat, cIdx) in categories" :key="cat.id" style="margin-bottom: 8px;">
+        
+        <!-- Category Node -->
+        <div class="tree-item category" :class="{active: activeNode === cat}" @click="selectNode('category', cat)">
+          <span>{{ cat.label || 'Unnamed Category' }}</span>
+          <button class="add-btn" @click.stop="addGroup(cat)" title="Add Group inside this Category">+</button>
+        </div>
+        
+        <!-- Groups inside Category -->
+        <div v-for="(grp, gIdx) in cat.groups" :key="grp.id">
+          <div class="tree-item group" :class="{active: activeNode === grp}" @click="selectNode('group', grp)">
+            <span>{{ grp.label || 'Unnamed Group' }}</span>
+            <button class="add-btn" @click.stop="addItem(grp)" title="Add Item inside this Group">+</button>
+          </div>
+          
+          <!-- Items inside Group -->
+          <div class="tree-item item" :class="{active: activeNode === item}" v-for="item in grp.items" :key="item.id" @click="selectNode('item', item)">
+            <span>{{ item.label || 'Unnamed Item' }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <button class="btn btn-block" @click="addCategory" style="margin-bottom: 24px;">+ Add Category</button>
+
+      <h3 style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Floor Plans</h3>
+      <div v-for="(plan, pIdx) in floorPlans" :key="plan.id" style="margin-bottom: 8px;">
+        <div class="tree-item category" :class="{active: activeNode === plan}" @click="selectNode('floorplan', plan)">
+          <span>{{ plan.name || 'Unnamed Plan' }}</span>
+          <button class="add-btn" @click.stop="addHotspot(plan)" title="Add Hotspot">+</button>
+        </div>
+        
+        <!-- Hotspots inside Floor Plan -->
+        <div v-for="(hotspot, hIdx) in plan.hotspots" :key="hotspot.id">
+          <div class="tree-item item" :class="{active: activeNode === hotspot}" @click="selectNode('hotspot', hotspot)">
+            <span>🎯 {{ hotspot.title || 'Unnamed Hotspot' }}</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-block" @click="addFloorPlan" style="margin-bottom: 24px;">+ Add Floor Plan</button>
+
+      <h3 style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Map Pins</h3>
+      <div v-for="(pin, pIdx) in mapPins" :key="pin.id" style="margin-bottom: 2px;">
+        <div class="tree-item category" :class="{active: activeNode === pin}" @click="selectNode('mappin', pin)">
+          <span>{{ pin.label || 'Unnamed Pin' }}</span>
+        </div>
+      </div>
+      <button class="btn btn-block" @click="addMapPin" style="margin-bottom: 24px;">+ Add Map Pin</button>
+    </div>
+  </div>
+
+  <!-- 2. MIDDLE PANEL: EDITOR -->
+  <div class="editor-panel">
+    <div class="header">
+      <h2>Editor</h2>
+      <button v-if="activeNode" class="btn btn-danger" style="padding: 4px 10px; font-size: 12px;" @click="deleteActiveNode">Delete Node</button>
+    </div>
+    
+    <div v-if="!activeNode" class="empty-state">
+      <div style="font-size: 40px; margin-bottom: 20px;">👈</div>
+      <p>Select a Category, Group, or Item from the sidebar to edit its properties.</p>
+    </div>
+    
+    <div v-else class="form-container">
+      
+      <!-- General Info -->
+      <div class="form-group">
+        <label>ID (Unique Identifier)</label>
+        <input type="text" v-model="activeNode.id">
+      </div>
+      <div class="form-group" v-if="activeType !== 'floorplan' && activeType !== 'hotspot'">
+        <label>Display Label / Name</label>
+        <input type="text" v-model="activeNode.label">
+      </div>
+      
+      <hr style="border-color: var(--border); margin: 30px 0;">
+
+      <!-- Floor Plan Settings -->
+      <template v-if="activeType === 'floorplan'">
+        <div class="form-group">
+          <label>Plan Name</label>
+          <input type="text" v-model="activeNode.name">
+        </div>
+        <div class="form-group">
+          <label>Blueprint Image Path</label>
+          <div class="row" style="align-items: center;">
+            <input type="text" v-model="activeNode.image" placeholder="/media/posters/plan.jpg" style="margin-bottom:0">
+            <input type="file" accept="image/*" @change="(e) => { if(e.target.files[0]) activeNode.image = '/media/posters/' + e.target.files[0].name }" style="width:auto; margin-bottom:0; padding:4px">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Carpet Area</label>
+          <input type="text" v-model="activeNode.carpetArea" placeholder="e.g. 1,850 sq.ft">
+        </div>
+        <div class="form-group">
+          <label>Built-up Area</label>
+          <input type="text" v-model="activeNode.builtUpArea" placeholder="e.g. 2,200 sq.ft">
+        </div>
+        <div class="form-group">
+          <label>Facing Direction</label>
+          <input type="text" v-model="activeNode.facing" placeholder="e.g. East">
+        </div>
+      </template>
+
+      <!-- Map Pin Settings -->
+      <template v-if="activeType === 'mappin'">
+        <div class="form-group">
+          <label>Category</label>
+          <input type="text" v-model="activeNode.category" placeholder="e.g. Schools, Hospitals">
+        </div>
+        <div class="form-group">
+          <label>Latitude</label>
+          <input type="number" step="any" v-model.number="activeNode.lat">
+        </div>
+        <div class="form-group">
+          <label>Longitude</label>
+          <input type="number" step="any" v-model.number="activeNode.lng">
+        </div>
+        <div class="form-group">
+          <label>Drive Time / Distance</label>
+          <input type="text" v-model="activeNode.driveTime" placeholder="e.g. 5 mins">
+        </div>
+        <div class="form-group">
+          <label style="display:flex; align-items:center; gap:8px">
+            <input type="checkbox" v-model="activeNode.isMain" style="width:auto">
+            Is Main Project Site?
+          </label>
+        </div>
+      </template>
+      
+      
+      <!-- Category Specific Settings -->
+      <template v-if="activeType === 'category'">
+        <div class="video-capture-card">
+          <label style="color: var(--primary)">Video Transition Segment</label>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">Plays when a user clicks this category on the Bottom Navigation Bar.</p>
+          <div class="row">
+            <div>
+              <label>Start (s)</label>
+              <input type="number" step="0.1" v-model.number="catStart">
+              <button class="btn btn-block" style="font-size: 12px;" @click="setStartFromVideo('cat')">Set from Video</button>
+            </div>
+            <div>
+              <label>End (s)</label>
+              <input type="number" step="0.1" v-model.number="catEnd">
+              <button class="btn btn-block" style="font-size: 12px;" @click="setEndFromVideo('cat')">Set from Video</button>
+            </div>
+          </div>
+        </div>
+      </template>
+      
+      <!-- Item Specific Settings -->
+      <template v-if="activeType === 'item'">
+        <div class="video-capture-card">
+          <label style="color: var(--primary)">Instant Seek Timestamp</label>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 0; margin-bottom: 12px;">The exact frame the video snaps to behind the photo gallery.</p>
+          <div class="row">
+            <div>
+              <label>Start (s)</label>
+              <input type="number" step="0.1" v-model.number="itemStart">
+            </div>
+            <div style="display:flex; align-items:flex-end;">
+               <button class="btn btn-block" style="font-size: 12px;" @click="setStartFromVideo('item')">Set from Video</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Panorama Image URL (Optional)</label>
+          <div class="row" style="align-items: center;">
+            <input type="text" v-model="activeNode.panorama" placeholder="/media/pano/view.jpg" style="margin-bottom:0">
+            <input type="file" accept="image/*" @change="(e) => { if(e.target.files[0]) activeNode.panorama = '/media/pano/' + e.target.files[0].name }" style="width:auto; margin-bottom:0; padding:4px">
+          </div>
+          <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">*Note: You must manually place the actual image file into <code>public/media/pano/</code></p>
+        </div>
+        
+        <div class="form-group">
+          <label style="display:flex; justify-content:space-between; align-items:center">
+            Gallery Images (One URL per line)
+            <input type="file" multiple accept="image/*" @change="(e) => { Array.from(e.target.files).forEach(f => { if(!activeNode.galleryImages) activeNode.galleryImages = []; activeNode.galleryImages.push('/media/posters/' + f.name); }) }" style="width:auto; margin-bottom:0; padding:4px; font-size:11px; background:var(--bg-card)">
+          </label>
+          <textarea rows="6" :value="activeNode.galleryImages ? activeNode.galleryImages.join('\n') : ''" @input="updateGalleryImages" placeholder="/media/posters/view1.jpg&#10;/media/posters/view2.jpg" style="margin-top: 8px;"></textarea>
+          <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">*Note: You must manually place these image files into <code>public/media/posters/</code></p>
+        </div>
+      </template>
+
+      <!-- Hotspot Specific Settings -->
+      <template v-if="activeType === 'hotspot'">
+        
+        <div class="video-capture-card">
+          <label style="color: var(--primary); margin-bottom: 8px;">Visual Position Picker</label>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 0; margin-bottom: 0;">👉 Use the large preview panel on the right to click and set exact coordinates.</p>
+        </div>
+
+        <div class="form-group">
+          <label>Hotspot Title</label>
+          <input type="text" v-model="activeNode.title">
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label>X Position (%)</label>
+            <input type="number" step="0.1" v-model.number="activeNode.x" placeholder="e.g. 50">
+          </div>
+          <div class="form-group">
+            <label>Y Position (%)</label>
+            <input type="number" step="0.1" v-model.number="activeNode.y" placeholder="e.g. 50">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label style="display:flex; justify-content:space-between; align-items:center">
+            Hotspot Images (One URL per line)
+            <input type="file" multiple accept="image/*" @change="(e) => { Array.from(e.target.files).forEach(f => { if(!activeNode.images) activeNode.images = []; activeNode.images.push('/media/posters/' + f.name); }) }" style="width:auto; margin-bottom:0; padding:4px; font-size:11px; background:var(--bg-card)">
+          </label>
+          <textarea rows="4" :value="activeNode.images ? activeNode.images.join('\n') : ''" @input="updateHotspotImages" placeholder="/media/posters/view1.jpg" style="margin-top: 8px;"></textarea>
+        </div>
+      </template>
+      
+    </div>
+  </div>
+
+  <!-- 3. RIGHT PANEL: VIDEO PREVIEW -->
+  <div class="preview-panel">
+    <div class="video-toolbar">
+      <div>
+         <input type="file" accept="video/mp4" @change="loadVideo" id="videoUpload" style="display: none;">
+         <label for="videoUpload" class="btn" style="margin: 0; display: inline-block;">Load Local Video File</label>
+      </div>
+      
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <label style="font-size: 11px; margin: 0; color: var(--text-muted);">JSON Video Path:</label>
+        <input type="text" v-model="mainVideoPath" placeholder="/media/main.mp4" style="margin:0; padding: 4px 8px; width: 160px; font-size: 12px;">
+      </div>
+
+      <div class="time-badge" v-if="currentTime !== null">{{ currentTime.toFixed(2) }}s</div>
+      <button class="btn btn-primary" @click="showExport = true">Export Final Config</button>
+    </div>
+    <div class="video-wrapper" v-show="activeType !== 'hotspot'">
+      <video ref="videoRef" controls @timeupdate="onTimeUpdate"></video>
+    </div>
+    
+    <!-- Large Hotspot Picker -->
+    <div class="video-wrapper" v-if="activeType === 'hotspot' && parentFloorPlan" style="background: var(--bg-dark); position: relative; padding: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+      <div style="position: absolute; top: 20px; left: 20px; background: var(--bg-panel); border: 1px solid var(--border); padding: 12px 20px; border-radius: 8px; z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <h3 style="margin: 0; font-size: 14px; color: var(--text-muted); font-weight: normal;">Click on image to pin: <strong style="color: white; margin-left: 8px;">{{ activeNode.title || 'Hotspot' }}</strong></h3>
+      </div>
+      
+      <!-- Tightly wrapped container -->
+      <div 
+        style="position: relative; display: inline-flex; justify-content: center; align-items: center; max-width: 100%; max-height: 100%; cursor: crosshair; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border-radius: 8px;"
+        @click="pickHotspotPosition"
+      >
+        <img :src="parentFloorPlan.image" style="display: block; max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; border-radius: 8px;" />
+        <!-- Indicator Pin -->
+        <div 
+          style="position: absolute; width: 24px; height: 24px; background: var(--primary); border: 3px solid white; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 4px 12px rgba(0,0,0,0.8); pointer-events: none; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);"
+          :style="{ left: activeNode.x + '%', top: activeNode.y + '%' }"
+        ></div>
+      </div>
+    </div>
+    
+    <!-- EXPORT MODAL -->
+    <div class="modal-overlay" v-if="showExport">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 style="margin:0">Export JSON</h2>
+          <button class="add-btn" @click="showExport = false">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p style="margin-top:0">Copy this JSON and replace the <code>categories</code> array in your <code>config/project.ts</code> file.</p>
+          <textarea readonly>{{ generatedJson }}</textarea>
+        </div>
+      </div>
+    </div>
+    
+    <!-- IMPORT MODAL -->
+    <div class="modal-overlay" v-if="showImport">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 style="margin:0">Import JSON</h2>
+          <button class="add-btn" @click="showImport = false">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p style="margin-top:0">Paste your existing <code>categories</code> array JSON below to edit it.</p>
+          <textarea v-model="importJsonText"></textarea>
+          <button class="btn btn-primary btn-block" style="margin-top: 16px;" @click="processImport">Process Import</button>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+  const { createApp, ref, computed } = Vue;
+
+  createApp({
+    setup() {
+      const videoRef = ref(null);
+      const currentTime = ref(0);
+      const showExport = ref(false);
+      const showImport = ref(false);
+      const importJsonText = ref('');
+      const mainVideoPath = ref('/media/main.mp4');
+      
+      const categories = ref([]);
+      const floorPlans = ref([]);
+      const mapPins = ref([]);
+
+      const activeNode = ref(null);
+      const activeType = ref(''); // 'category', 'group', 'item'
+      
+      const selectNode = (type, node) => {
+        activeType.value = type;
+        activeNode.value = node;
+      };
+
+      // Ensure nodes have timeSegment array if they are categories or items before reading/writing it.
+      const ensureTimeSegment = (node) => {
+         if (!node.timeSegment || !Array.isArray(node.timeSegment)) {
+             node.timeSegment = [0, 0];
+         }
+      }
+
+      // Computed properties for video times
+      const catStart = computed({
+        get: () => activeNode.value?.timeSegment?.[0] || 0,
+        set: (v) => { if(activeNode.value) { ensureTimeSegment(activeNode.value); activeNode.value.timeSegment[0] = v; } }
+      });
+      const catEnd = computed({
+        get: () => activeNode.value?.timeSegment?.[1] || 0,
+        set: (v) => { if(activeNode.value) { ensureTimeSegment(activeNode.value); activeNode.value.timeSegment[1] = v; } }
+      });
+
+      const itemStart = computed({
+        get: () => activeNode.value?.timeSegment?.[0] || 0,
+        set: (v) => { if(activeNode.value) { ensureTimeSegment(activeNode.value); activeNode.value.timeSegment[0] = v; activeNode.value.timeSegment[1] = v; } }
+      });
+
+      const loadVideo = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+           videoRef.value.src = URL.createObjectURL(file);
+           mainVideoPath.value = '/media/' + file.name;
+        }
+      };
+
+      const onTimeUpdate = () => { if (videoRef.value) currentTime.value = videoRef.value.currentTime; };
+
+      const setStartFromVideo = (target) => { 
+        if(!videoRef.value) return;
+        const time = parseFloat(videoRef.value.currentTime.toFixed(2));
+        if (target === 'cat') catStart.value = time;
+        if (target === 'item') itemStart.value = time;
+      };
+      
+      const setEndFromVideo = (target) => { 
+        if(!videoRef.value) return;
+        const time = parseFloat(videoRef.value.currentTime.toFixed(2));
+        if (target === 'cat') catEnd.value = time;
+      };
+
+      const addCategory = () => { 
+         const cat = { id: 'cat_' + Date.now(), label: 'New Category', groups: [] };
+         categories.value.push(cat); 
+         selectNode('category', cat);
+      };
+      
+      const addFloorPlan = () => {
+         const plan = { id: 'fp_' + Date.now(), name: 'New Plan', image: '', carpetArea: '', builtUpArea: '', facing: '', hotspots: [] };
+         floorPlans.value.push(plan);
+         selectNode('floorplan', plan);
+      };
+
+      const addHotspot = (plan) => {
+         if (!plan.hotspots) plan.hotspots = [];
+         const hotspot = { id: 'hs_' + Date.now(), title: 'New Hotspot', x: 50, y: 50, images: [] };
+         plan.hotspots.push(hotspot);
+         selectNode('hotspot', hotspot);
+      };
+
+      const addMapPin = () => {
+         const pin = { id: 'pin_' + Date.now(), label: 'New Location', lat: 13.08, lng: 80.20, driveTime: '' };
+         mapPins.value.push(pin);
+         selectNode('mappin', pin);
+      };
+      
+      const addGroup = (cat) => { 
+         const grp = { id: 'grp_' + Date.now(), label: 'NEW GROUP', items: [] };
+         cat.groups.push(grp);
+         selectNode('group', grp);
+      };
+      
+      const addItem = (grp) => { 
+         const itm = { id: 'itm_' + Date.now(), label: 'New Item', galleryImages: [] };
+         grp.items.push(itm);
+         selectNode('item', itm);
+      };
+
+      const deleteActiveNode = () => {
+         if (!activeNode.value) return;
+         
+         if (activeType.value === 'category') {
+             categories.value = categories.value.filter(c => c !== activeNode.value);
+         } else if (activeType.value === 'group') {
+             categories.value.forEach(c => { c.groups = c.groups.filter(g => g !== activeNode.value); });
+         } else if (activeType.value === 'item') {
+             categories.value.forEach(c => {
+                 c.groups.forEach(g => { g.items = g.items.filter(i => i !== activeNode.value); });
+             });
+         } else if (activeType.value === 'floorplan') {
+             floorPlans.value = floorPlans.value.filter(p => p !== activeNode.value);
+         } else if (activeType.value === 'hotspot') {
+             floorPlans.value.forEach(p => {
+                 if (p.hotspots) {
+                     p.hotspots = p.hotspots.filter(h => h !== activeNode.value);
+                 }
+             });
+         } else if (activeType.value === 'mappin') {
+             mapPins.value = mapPins.value.filter(p => p !== activeNode.value);
+         }
+         activeNode.value = null;
+         activeType.value = '';
+      };
+
+      const updateGalleryImages = (e) => { 
+          if (activeNode.value) {
+              activeNode.value.galleryImages = e.target.value.split('\n').map(s => s.trim()).filter(s => s !== ''); 
+          }
+      };
+
+      const updateHotspotImages = (e) => { 
+          if (activeNode.value) {
+              activeNode.value.images = e.target.value.split('\n').map(s => s.trim()).filter(s => s !== ''); 
+          }
+      };
+
+      const parentFloorPlan = computed(() => {
+          if (activeType.value !== 'hotspot' || !activeNode.value) return null;
+          return floorPlans.value.find(p => p.hotspots && p.hotspots.includes(activeNode.value));
+      });
+
+      const pickHotspotPosition = (e) => {
+          if (!activeNode.value) return;
+          // The container perfectly wraps the image now
+          const rect = e.currentTarget.getBoundingClientRect();
+          
+          let x = e.clientX - rect.left;
+          let y = e.clientY - rect.top;
+          
+          // Clamp values to container boundaries
+          x = Math.max(0, Math.min(x, rect.width));
+          y = Math.max(0, Math.min(y, rect.height));
+          
+          const percentX = (x / rect.width) * 100;
+          const percentY = (y / rect.height) * 100;
+          
+          activeNode.value.x = parseFloat(percentX.toFixed(1));
+          activeNode.value.y = parseFloat(percentY.toFixed(1));
+      };
+
+      const processImport = () => {
+        try {
+          let text = importJsonText.value.trim();
+          
+          // Strip out TS/JS variable declarations like "export const project = "
+          text = text.replace(/export\s+const\s+\w+(\s*:\s*\w+)?\s*=\s*/, '');
+          if (text.endsWith(';')) text = text.slice(0, -1);
+          
+          // If the user pasted "categories: [...], floorPlans: [...]", wrap it in an object
+          if (!text.startsWith('{') && !text.startsWith('[')) {
+             text = '{' + text + '}';
+          }
+          
+          // Evaluate the raw JavaScript string (much more forgiving than JSON.parse)
+          const parsed = new Function('return ' + text)();
+          
+          if (parsed && Array.isArray(parsed.categories)) {
+            categories.value = parsed.categories;
+            if (parsed.mainVideo) mainVideoPath.value = parsed.mainVideo;
+            if (Array.isArray(parsed.floorPlans)) floorPlans.value = parsed.floorPlans;
+            if (Array.isArray(parsed.mapPins)) mapPins.value = parsed.mapPins;
+            
+            showImport.value = false;
+            activeNode.value = null;
+            if (categories.value.length > 0) selectNode('category', categories.value[0]);
+          } else if (Array.isArray(parsed)) {
+            categories.value = parsed;
+            showImport.value = false;
+            activeNode.value = null;
+          } else {
+            alert('Could not find a valid project config in the pasted text.');
+          }
+        } catch(e) {
+          alert('Failed to parse. Ensure you are copying the JS object correctly. Error: ' + e.message);
+        }
+      }
+
+      const generatedJson = computed(() => {
+        return JSON.stringify({
+          mainVideo: mainVideoPath.value,
+          homeTimeSegment: [0, 3],
+          homePoster: '/media/posters/hub.jpg',
+          categories: categories.value,
+          floorPlans: floorPlans.value,
+          mapPins: mapPins.value
+        }, null, 2);
+      });
+
+      // Initial selection
+      if (categories.value.length > 0) selectNode('category', categories.value[0]);
+
+      return {
+        videoRef, currentTime, categories, floorPlans, mapPins, showExport, showImport, importJsonText, mainVideoPath,
+        activeNode, activeType, selectNode, parentFloorPlan,
+        catStart, catEnd, itemStart,
+        loadVideo, onTimeUpdate, setStartFromVideo, setEndFromVideo,
+        addCategory, addGroup, addItem, addFloorPlan, addHotspot, addMapPin, deleteActiveNode, updateGalleryImages, updateHotspotImages, pickHotspotPosition, processImport, generatedJson
+      };
+    }
+  }).mount('#app');
+</script>
+</body>
+</html>

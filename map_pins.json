@@ -1,0 +1,187 @@
+[
+  {
+    "id": "pin_0",
+    "label": "SITE LOCATION",
+    "driveTime": "Project Site",
+    "category": "Project",
+    "isMain": true,
+    "lat": 13.084654,
+    "lng": 80.182151
+  },
+  {
+    "id": "pin_1",
+    "label": "Velammal School",
+    "driveTime": "5 mins",
+    "category": "Schools",
+    "lat": 13.081649,
+    "lng": 80.170943
+  },
+  {
+    "id": "pin_2",
+    "label": "Spartan Exclusive School",
+    "driveTime": "10 mins",
+    "category": "Schools",
+    "lat": 13.082553,
+    "lng": 80.180838
+  },
+  {
+    "id": "pin_3",
+    "label": "D.A.V Girls Senior Secondary School",
+    "driveTime": "10 mins",
+    "category": "Schools",
+    "lat": 29.979303,
+    "lng": 76.834419
+  },
+  {
+    "id": "pin_4",
+    "label": "DAV SECONDARY SCHOOL MOGAPPAIR",
+    "driveTime": "10 mins",
+    "category": "Schools",
+    "lat": 13.087858,
+    "lng": 80.179071
+  },
+  {
+    "id": "pin_5",
+    "label": "Narayana Olympiad (CBSE) School",
+    "driveTime": "10 mins",
+    "category": "Schools",
+    "lat": 13.079575,
+    "lng": 80.182626
+  },
+  {
+    "id": "pin_6",
+    "label": "Maharishi Vidya Mandir,",
+    "driveTime": "10 mins",
+    "category": "Schools",
+    "lat": 27.149722,
+    "lng": 93.755001
+  },
+  {
+    "id": "pin_7",
+    "label": "MAR GREGORIOS COLLEGE OF ARTS AND SCIENCE",
+    "driveTime": "15 mins",
+    "category": "Colleges",
+    "lat": 13.079798,
+    "lng": 80.172416
+  },
+  {
+    "id": "pin_8",
+    "label": "Anna Adarsh College for Women",
+    "driveTime": "15 mins",
+    "category": "Colleges",
+    "lat": 13.080466,
+    "lng": 80.210589
+  },
+  {
+    "id": "pin_9",
+    "label": "C Kandaswami Naidu College for Men",
+    "driveTime": "15 mins",
+    "category": "Colleges",
+    "lat": 11.761108,
+    "lng": 79.752098
+  },
+  {
+    "id": "pin_10",
+    "label": "Shri Krishnaswamy College For Women Anna Nagar",
+    "driveTime": "15 mins",
+    "category": "Colleges",
+    "lat": 13.084219,
+    "lng": 80.211907
+  },
+  {
+    "id": "pin_11",
+    "label": "DG Vaishnav College",
+    "driveTime": "15 mins",
+    "category": "Colleges",
+    "lat": 13.075689,
+    "lng": 80.213639
+  },
+  {
+    "id": "pin_12",
+    "label": "Dr. M.G.R. Engineering College",
+    "driveTime": "15 mins",
+    "category": "Colleges",
+    "lat": 12.992885,
+    "lng": 80.199377
+  },
+  {
+    "id": "pin_13",
+    "label": "Thirumangalam Metro Station",
+    "driveTime": "5 mins",
+    "category": "Transport",
+    "lat": 13.085056,
+    "lng": 80.202281
+  },
+  {
+    "id": "pin_14",
+    "label": "Koyambedu Metro Station",
+    "driveTime": "10 mins",
+    "category": "Transport",
+    "lat": 13.073433,
+    "lng": 80.195088
+  },
+  {
+    "id": "pin_15",
+    "label": "Mogappair Bus Stop",
+    "driveTime": "5 mins",
+    "category": "Transport",
+    "lat": 13.088136,
+    "lng": 80.161824
+  },
+  {
+    "id": "pin_16",
+    "label": "Chennai Mofussil Bus Terminus CMBT",
+    "driveTime": "15 mins",
+    "category": "Transport",
+    "lat": 13.072092,
+    "lng": 80.201855
+  },
+  {
+    "id": "pin_17",
+    "label": "The Madras Medical Mission Hospital",
+    "driveTime": "10 mins",
+    "category": "Hospitals",
+    "lat": 13.085963,
+    "lng": 80.187055
+  },
+  {
+    "id": "pin_18",
+    "label": "Frontier Lifeline Hospital",
+    "driveTime": "10 mins",
+    "category": "Hospitals",
+    "lat": 13.087724,
+    "lng": 80.185659
+  },
+  {
+    "id": "pin_19",
+    "label": "J.J. Nagar Police Station",
+    "driveTime": "5 mins",
+    "category": "Other",
+    "lat": 13.320354,
+    "lng": 79.585631
+  },
+  {
+    "id": "pin_20",
+    "label": "VR",
+    "driveTime": "10 mins",
+    "category": "Recreation",
+    "lat": 13.081737,
+    "lng": 80.127062
+  },
+  {
+    "id": "pin_21",
+    "label": "Mangal Eri Park",
+    "driveTime": "5 mins",
+    "category": "Recreation",
+    "lat": 13.134575,
+    "lng": 80.15705
+  },
+  {
+    "id": "pin_22",
+    "label": "Anna Tower Park",
+    "driveTime": "10 mins",
+    "category": "Recreation",
+    "lat": 13.052924,
+    "lng": 80.250009
+  }
+]
