@@ -340,6 +340,31 @@ export const project: ProjectConfig = {
         "src": "/media/360/bedroom_02_2.webp",
         "name": "Bedroom 2 (Center)",
         "links": []
+      },
+      "exterior_p1": {
+        "src": "/media/360/exterior/p1.webp",
+        "name": "Exterior (Front)",
+        "links": []
+      },
+      "exterior_p2": {
+        "src": "/media/360/exterior/p2.webp",
+        "name": "Exterior (Side 1)",
+        "links": []
+      },
+      "exterior_p3": {
+        "src": "/media/360/exterior/p3.webp",
+        "name": "Exterior (Back)",
+        "links": []
+      },
+      "exterior_p4": {
+        "src": "/media/360/exterior/p4.webp",
+        "name": "Exterior (Side 2)",
+        "links": []
+      },
+      "exterior_p5": {
+        "src": "/media/360/exterior/p5.webp",
+        "name": "Exterior (Aerial/Top)",
+        "links": []
       }
     }
   }
