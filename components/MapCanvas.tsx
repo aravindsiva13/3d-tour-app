@@ -130,7 +130,7 @@ export default function MapCanvas({ pins, hoveredPinId }: MapCanvasProps) {
       >
       {pins.map((pin, index) => {
         const isHovered = hoveredPinId === pin.id;
-        const showPopup = isHovered || popupInfo?.id === pin.id;
+        const showPopup = isHovered || popupInfo?.id === pin.id || pin.isMain;
         
         return (
           <React.Fragment key={pin.id}>
