@@ -50,6 +50,16 @@ export interface VirtualTourNode {
   src: string;
   name: string;
   links: VirtualTourLink[];
+  /**
+   * Heading (same yaw convention as links) to face on arriving at this node.
+   *
+   * Each panorama was rendered with its own arbitrary orientation, so carrying
+   * the previous room's camera yaw across a transition lands you pointing in a
+   * meaningless direction — often straight at a wall. When set, the camera is
+   * snapped to this heading while the transition overlay is still opaque, so
+   * you always arrive looking into the room. Omit to keep the incoming yaw.
+   */
+  entryYaw?: number;
 }
 
 export interface VirtualTourConfig {

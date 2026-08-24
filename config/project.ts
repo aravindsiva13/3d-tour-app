@@ -289,6 +289,7 @@ export const project: ProjectConfig = {
       "foyer": {
         "src": "/media/360/foyer.webp",
         "name": "Foyer & Lift Lobby",
+        "entryYaw": 230,
         "links": [
           { "nodeId": "exterior_p3", "label": "Down to Parking", "yaw": 12.5, "pitch": -24.0 },
           { "nodeId": "living_area_01", "label": "Enter the Home", "yaw": -98.48, "pitch": -32.39 }
@@ -297,6 +298,7 @@ export const project: ProjectConfig = {
       "living_area_01": {
         "src": "/media/360/living_area_01.webp",
         "name": "Entry Vestibule",
+        "entryYaw": 180,
         "links": [
           { "nodeId": "foyer", "label": "Back to Foyer", "yaw": 87.31, "pitch": -31.22 },
           { "nodeId": "living_area_02", "label": "Walk Further In", "yaw": 146.47, "pitch": -22.56 },
@@ -306,6 +308,7 @@ export const project: ProjectConfig = {
       "living_area_02": {
         "src": "/media/360/living_area_02.webp",
         "name": "Living Room",
+        "entryYaw": 200,
         "links": [
           { "nodeId": "living_area_01", "label": "Back to Entrance", "yaw": -55.0, "pitch": -30.0 },
           { "nodeId": "bedroom_01_1", "label": "Bedroom 1", "yaw": 38.16, "pitch": -37.54 },
@@ -316,6 +319,7 @@ export const project: ProjectConfig = {
       "dining_area": {
         "src": "/media/360/dining_area.webp",
         "name": "Dining Area",
+        "entryYaw": 185,
         "links": [
           { "nodeId": "living_area_02", "label": "Back to Living Area", "yaw": 48.0, "pitch": -34.0 },
           { "nodeId": "living_area_01", "label": "Towards Entrance", "yaw": 68.02, "pitch": -20.05 },
@@ -326,6 +330,7 @@ export const project: ProjectConfig = {
       "kitchen_01": {
         "src": "/media/360/kitchen_01.webp",
         "name": "Kitchen 1",
+        "entryYaw": 180,
         "links": [
           { "nodeId": "dining_area", "label": "Back to Dining", "yaw": 126.5, "pitch": -8.74 },
           { "nodeId": "kitchen_02", "label": "Further into Kitchen", "yaw": 173.56, "pitch": -10.5 }
@@ -334,6 +339,7 @@ export const project: ProjectConfig = {
       "kitchen_02": {
         "src": "/media/360/kitchen_02.webp",
         "name": "Kitchen 2",
+        "entryYaw": 95,
         "links": [
           { "nodeId": "kitchen_01", "label": "Back towards Dining", "yaw": -143.3, "pitch": -31.0 }
         ]
@@ -341,6 +347,7 @@ export const project: ProjectConfig = {
       "bedroom_01_1": {
         "src": "/media/360/bedroom_01_1.webp",
         "name": "Bedroom 1 (Corner)",
+        "entryYaw": 185,
         "links": [
           { "nodeId": "living_area_02", "label": "Exit Bedroom", "yaw": 95.96, "pitch": -36.68 },
           { "nodeId": "bedroom_01_2", "label": "Towards the Door", "yaw": -165.5, "pitch": -35.0 },
@@ -350,6 +357,7 @@ export const project: ProjectConfig = {
       "bedroom_01_2": {
         "src": "/media/360/bedroom_01_2.webp",
         "name": "Bedroom 1 (Doorway)",
+        "entryYaw": 150,
         "links": [
           { "nodeId": "living_area_02", "label": "Exit Bedroom", "yaw": -108.0, "pitch": -33.0 },
           { "nodeId": "bedroom_01_3", "label": "Bedside View", "yaw": 117.0, "pitch": -38.0 }
@@ -358,6 +366,7 @@ export const project: ProjectConfig = {
       "bedroom_01_3": {
         "src": "/media/360/bedroom_01_3.webp",
         "name": "Bedroom 1 (Window)",
+        "entryYaw": 210,
         "links": [
           { "nodeId": "bedroom_01_2", "label": "Back to Doorway", "yaw": -60.0, "pitch": -34.0 },
           { "nodeId": "bedroom_01_1", "label": "Foot of the Bed", "yaw": -86.0, "pitch": -35.0 }
@@ -366,6 +375,7 @@ export const project: ProjectConfig = {
       "bedroom_02_1": {
         "src": "/media/360/bedroom_02_1.webp",
         "name": "Bedroom 2 (Bedside)",
+        "entryYaw": 180,
         "links": [
           { "nodeId": "living_area_02", "label": "Exit Bedroom", "yaw": 95.8, "pitch": -30.0 },
           { "nodeId": "bedroom_02_2", "label": "Study Area", "yaw": -172.0, "pitch": -34.0 }
@@ -374,6 +384,7 @@ export const project: ProjectConfig = {
       "bedroom_02_2": {
         "src": "/media/360/bedroom_02_2.webp",
         "name": "Bedroom 2 (Study)",
+        "entryYaw": 135,
         "links": [
           { "nodeId": "bedroom_02_1", "label": "Back to Bedside", "yaw": -97.5, "pitch": -36.0 }
         ]
@@ -381,6 +392,7 @@ export const project: ProjectConfig = {
       "exterior_p1": {
         "src": "/media/360/exterior/p1.webp",
         "name": "Main Entrance Gate",
+        "entryYaw": 175,
         "links": [
           { "nodeId": "exterior_p3", "label": "Enter the Gate", "yaw": 174.6, "pitch": -14.0 },
           { "nodeId": "exterior_p2", "label": "Along the Street", "yaw": -95.2, "pitch": -10.8 },
@@ -390,6 +402,7 @@ export const project: ProjectConfig = {
       "exterior_p2": {
         "src": "/media/360/exterior/p2.webp",
         "name": "Street (Side Elevation)",
+        "entryYaw": 220,
         "links": [
           { "nodeId": "exterior_p1", "label": "Back to Main Gate", "yaw": -95.0, "pitch": -11.0 }
         ]
@@ -397,6 +410,7 @@ export const project: ProjectConfig = {
       "exterior_p3": {
         "src": "/media/360/exterior/p3.webp",
         "name": "Stilt Parking",
+        "entryYaw": 200,
         "links": [
           { "nodeId": "foyer", "label": "Enter the Lobby", "yaw": -149.0, "pitch": -18.0 },
           { "nodeId": "exterior_p1", "label": "Out to the Street", "yaw": 153.5, "pitch": -19.0 },
@@ -406,6 +420,7 @@ export const project: ProjectConfig = {
       "exterior_p4": {
         "src": "/media/360/exterior/p4.webp",
         "name": "Garden",
+        "entryYaw": 215,
         "links": [
           { "nodeId": "exterior_p3", "label": "Back to Parking", "yaw": -175.0, "pitch": -15.5 }
         ]
@@ -413,6 +428,7 @@ export const project: ProjectConfig = {
       "exterior_p5": {
         "src": "/media/360/exterior/p5.webp",
         "name": "Aerial Overview",
+        "entryYaw": 180,
         "links": [
           { "nodeId": "exterior_p1", "label": "Down to Entrance", "yaw": 160.0, "pitch": -32.0 }
         ]

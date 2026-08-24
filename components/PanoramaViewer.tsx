@@ -289,6 +289,7 @@ interface PendingMove {
   link: VirtualTourLink | null;   // null => menu/arrow jump, so no direction to turn toward
   texture: THREE.Texture;
   nodeId: string;
+  entryYaw?: number;              // heading to face on arrival, if the node defines one
 }
 
 const TransitionController = ({ pending, onCommit, materialRef }: {
@@ -381,6 +382,18 @@ const TransitionController = ({ pending, onCommit, materialRef }: {
         // Overlay is fully opaque here, so swapping the base texture underneath
         // it is invisible — no flash, no black frame.
         onCommit(pending.nodeId);
+
+        // Snap to the destination's arrival heading. This happens on the frame
+        // the overlay is fully opaque, so the rotation is never seen — you just
+        // open your eyes facing into the new room instead of at whatever wall
+        // happened to line up with the previous room's yaw.
+        if (oc && pending.entryYaw !== undefined) {
+          const [ex, ey, ez] = getHotspotPosition(pending.entryYaw, 0, 1);
+          const entry = new THREE.Spherical().setFromVector3(new THREE.Vector3(-ex, -ey, -ez));
+          oc.setAzimuthalAngle(entry.theta);
+          oc.setPolarAngle(entry.phi);
+        }
+
         state.blend = 0;
         if (materialRef.current) materialRef.current.opacity = 0;
 
@@ -566,7 +579,7 @@ export const PanoramaViewer: React.FC<PanoramaViewerProps> = ({ config, onClose 
     // Resolve the destination before starting the move, so the commit at the end
     // of the zoom is a swap between two decoded textures — never a stall.
     loadPanorama(target.src)
-      .then(texture => setPending({ link, texture, nodeId }))
+      .then(texture => setPending({ link, texture, nodeId, entryYaw: target.entryYaw }))
       .catch(() => setCurrentNodeId(nodeId)); // texture failed: jump rather than hang
   }, [config.nodes, pending]);
 
