@@ -288,83 +288,134 @@ export const project: ProjectConfig = {
     "nodes": {
       "foyer": {
         "src": "/media/360/foyer.webp",
-        "name": "Foyer",
-        "links": []
+        "name": "Foyer & Lift Lobby",
+        "links": [
+          { "nodeId": "exterior_p3", "label": "Down to Parking", "yaw": 12.5, "pitch": -24.0 },
+          { "nodeId": "living_area_01", "label": "Enter the Home", "yaw": -98.48, "pitch": -32.39 }
+        ]
       },
       "living_area_01": {
         "src": "/media/360/living_area_01.webp",
-        "name": "Living Area 1",
-        "links": []
+        "name": "Entry Vestibule",
+        "links": [
+          { "nodeId": "foyer", "label": "Back to Foyer", "yaw": 87.31, "pitch": -31.22 },
+          { "nodeId": "living_area_02", "label": "Walk Further In", "yaw": 146.47, "pitch": -22.56 },
+          { "nodeId": "dining_area", "label": "Go to Dining Area", "yaw": -151.4, "pitch": -14.0 }
+        ]
       },
       "living_area_02": {
         "src": "/media/360/living_area_02.webp",
-        "name": "Living Area 2",
-        "links": []
+        "name": "Living Room",
+        "links": [
+          { "nodeId": "living_area_01", "label": "Back to Entrance", "yaw": -55.0, "pitch": -30.0 },
+          { "nodeId": "bedroom_01_1", "label": "Bedroom 1", "yaw": 38.16, "pitch": -37.54 },
+          { "nodeId": "bedroom_02_1", "label": "Bedroom 2", "yaw": 67.13, "pitch": -19.38 },
+          { "nodeId": "dining_area", "label": "Dining Area", "yaw": 174.6, "pitch": -27.0 }
+        ]
       },
       "dining_area": {
         "src": "/media/360/dining_area.webp",
         "name": "Dining Area",
-        "links": []
+        "links": [
+          { "nodeId": "living_area_02", "label": "Back to Living Area", "yaw": 48.0, "pitch": -34.0 },
+          { "nodeId": "living_area_01", "label": "Towards Entrance", "yaw": 68.02, "pitch": -20.05 },
+          { "nodeId": "kitchen_01", "label": "Enter Kitchen", "yaw": -144.87, "pitch": -16.5 },
+          { "nodeId": "bedroom_01_1", "label": "Bedroom 1", "yaw": -110.9, "pitch": -22.6 }
+        ]
       },
       "kitchen_01": {
         "src": "/media/360/kitchen_01.webp",
         "name": "Kitchen 1",
-        "links": []
+        "links": [
+          { "nodeId": "dining_area", "label": "Back to Dining", "yaw": 126.5, "pitch": -8.74 },
+          { "nodeId": "kitchen_02", "label": "Further into Kitchen", "yaw": 173.56, "pitch": -10.5 }
+        ]
       },
       "kitchen_02": {
         "src": "/media/360/kitchen_02.webp",
         "name": "Kitchen 2",
-        "links": []
+        "links": [
+          { "nodeId": "kitchen_01", "label": "Back towards Dining", "yaw": -143.3, "pitch": -31.0 }
+        ]
       },
       "bedroom_01_1": {
         "src": "/media/360/bedroom_01_1.webp",
-        "name": "Bedroom 1 (Entrance)",
-        "links": []
+        "name": "Bedroom 1 (Corner)",
+        "links": [
+          { "nodeId": "living_area_02", "label": "Exit Bedroom", "yaw": 95.96, "pitch": -36.68 },
+          { "nodeId": "bedroom_01_2", "label": "Towards the Door", "yaw": -165.5, "pitch": -35.0 },
+          { "nodeId": "bedroom_01_3", "label": "Bedside & Window", "yaw": 157.0, "pitch": -36.0 }
+        ]
       },
       "bedroom_01_2": {
         "src": "/media/360/bedroom_01_2.webp",
-        "name": "Bedroom 1 (Center)",
-        "links": []
+        "name": "Bedroom 1 (Doorway)",
+        "links": [
+          { "nodeId": "living_area_02", "label": "Exit Bedroom", "yaw": -108.0, "pitch": -33.0 },
+          { "nodeId": "bedroom_01_3", "label": "Bedside View", "yaw": 117.0, "pitch": -38.0 }
+        ]
       },
       "bedroom_01_3": {
         "src": "/media/360/bedroom_01_3.webp",
         "name": "Bedroom 1 (Window)",
-        "links": []
+        "links": [
+          { "nodeId": "bedroom_01_2", "label": "Back to Doorway", "yaw": -60.0, "pitch": -34.0 },
+          { "nodeId": "bedroom_01_1", "label": "Foot of the Bed", "yaw": -86.0, "pitch": -35.0 }
+        ]
       },
       "bedroom_02_1": {
         "src": "/media/360/bedroom_02_1.webp",
-        "name": "Bedroom 2 (Entrance)",
-        "links": []
+        "name": "Bedroom 2 (Bedside)",
+        "links": [
+          { "nodeId": "living_area_02", "label": "Exit Bedroom", "yaw": 95.8, "pitch": -30.0 },
+          { "nodeId": "bedroom_02_2", "label": "Study Area", "yaw": -172.0, "pitch": -34.0 }
+        ]
       },
       "bedroom_02_2": {
         "src": "/media/360/bedroom_02_2.webp",
-        "name": "Bedroom 2 (Center)",
-        "links": []
+        "name": "Bedroom 2 (Study)",
+        "links": [
+          { "nodeId": "bedroom_02_1", "label": "Back to Bedside", "yaw": -97.5, "pitch": -36.0 }
+        ]
       },
       "exterior_p1": {
         "src": "/media/360/exterior/p1.webp",
-        "name": "Exterior (Front)",
-        "links": []
+        "name": "Main Entrance Gate",
+        "links": [
+          { "nodeId": "exterior_p3", "label": "Enter the Gate", "yaw": 174.6, "pitch": -14.0 },
+          { "nodeId": "exterior_p2", "label": "Along the Street", "yaw": -95.2, "pitch": -10.8 },
+          { "nodeId": "exterior_p5", "label": "Aerial View", "yaw": 174.6, "pitch": 22.0 }
+        ]
       },
       "exterior_p2": {
         "src": "/media/360/exterior/p2.webp",
-        "name": "Exterior (Side 1)",
-        "links": []
+        "name": "Street (Side Elevation)",
+        "links": [
+          { "nodeId": "exterior_p1", "label": "Back to Main Gate", "yaw": -95.0, "pitch": -11.0 }
+        ]
       },
       "exterior_p3": {
         "src": "/media/360/exterior/p3.webp",
-        "name": "Exterior (Back)",
-        "links": []
+        "name": "Stilt Parking",
+        "links": [
+          { "nodeId": "foyer", "label": "Enter the Lobby", "yaw": -149.0, "pitch": -18.0 },
+          { "nodeId": "exterior_p1", "label": "Out to the Street", "yaw": 153.5, "pitch": -19.0 },
+          { "nodeId": "exterior_p4", "label": "Garden", "yaw": -90.5, "pitch": -18.0 }
+        ]
       },
       "exterior_p4": {
         "src": "/media/360/exterior/p4.webp",
-        "name": "Exterior (Side 2)",
-        "links": []
+        "name": "Garden",
+        "links": [
+          { "nodeId": "exterior_p3", "label": "Back to Parking", "yaw": -175.0, "pitch": -15.5 }
+        ]
       },
       "exterior_p5": {
         "src": "/media/360/exterior/p5.webp",
-        "name": "Exterior (Aerial/Top)",
-        "links": []
+        "name": "Aerial Overview",
+        "links": [
+          { "nodeId": "exterior_p1", "label": "Down to Entrance", "yaw": 160.0, "pitch": -32.0 }
+        ]
       }
     }
   }

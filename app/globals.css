@@ -1,13 +1,56 @@
 @import "tailwindcss";
 
+/* ============================================================================
+   DCC — Luxury Gold + Dark Glassmorphism
+   Tokens first, then reusable glass/gold utilities, then component styles.
+   Gold is an ACCENT: active states, borders, icons, rules, CTAs. Body copy
+   stays limestone so contrast never drops below AA.
+   ========================================================================== */
+
 :root {
-  --ink: #131A17;
-  --ink-raised: #1C2521;
-  --limestone: #E6E2D8;
-  --limestone-dim: #9AA39C;
-  --brass: #B4914F;
-  --hairline: rgba(230, 226, 216, 0.15);
-  --scrim: linear-gradient(to top, rgba(19, 26, 23, 0.8) 0%, rgba(19, 26, 23, 0) 100%);
+  /* --- Surfaces: warm near-black, not blue-black --- */
+  --ink: #0B0B0A;
+  --ink-raised: #131210;
+  --ink-deep: #060605;
+
+  /* --- Gold ramp --- */
+  --gold-100: #F6E7BC;
+  --gold-200: #EBD599;
+  --gold-300: #DFC079;
+  --gold-400: #D4B46B;
+  --gold-500: #C9A961;   /* primary accent */
+  --gold-600: #B4914F;   /* original brass, kept for continuity */
+  --gold-700: #8C6F3B;
+  --gold-800: #5E4A27;
+
+  /* Back-compat alias — existing rules referencing --brass still work */
+  --brass: var(--gold-500);
+
+  /* --- Text --- */
+  --limestone: #F3F0E9;
+  --limestone-dim: #A9A396;
+  --limestone-faint: rgba(243, 240, 233, 0.55);
+
+  /* --- Glass --- */
+  --glass-bg: rgba(18, 16, 12, 0.55);
+  --glass-bg-strong: rgba(11, 10, 8, 0.80);
+  --glass-bg-soft: rgba(246, 231, 188, 0.06);
+  --glass-bg-softer: rgba(246, 231, 188, 0.03);
+  --glass-border: rgba(201, 169, 97, 0.22);
+  --glass-border-hi: rgba(201, 169, 97, 0.48);
+  --glass-highlight: inset 0 1px 0 rgba(246, 231, 188, 0.18);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --glass-shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --glass-blur: blur(20px) saturate(140%);
+
+  /* --- Gold effects --- */
+  --gold-sheen: linear-gradient(135deg, #F6E7BC 0%, #C9A961 38%, #8C6F3B 62%, #E3C77A 100%);
+  --gold-sheen-soft: linear-gradient(135deg, rgba(246,231,188,0.16) 0%, rgba(201,169,97,0.10) 50%, rgba(140,111,59,0.14) 100%);
+  --gold-glow: 0 0 24px rgba(201, 169, 97, 0.22);
+  --gold-glow-strong: 0 0 32px rgba(201, 169, 97, 0.40);
+
+  --hairline: rgba(201, 169, 97, 0.18);
+  --scrim: linear-gradient(to top, rgba(6, 6, 5, 0.85) 0%, rgba(6, 6, 5, 0) 100%);
 }
 
 html, body {
@@ -37,6 +80,131 @@ button {
   outline: none;
 }
 
+/* Accessibility: a visible gold focus ring on every interactive element.
+   :focus-visible only, so it never fires on mouse clicks. */
+:where(a, button, [role="button"], input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--gold-400);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: rgba(201, 169, 97, 0.30);
+  color: var(--limestone);
+}
+
+/* ============================================================================
+   REUSABLE GLASS + GOLD UTILITIES
+   ========================================================================== */
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-highlight);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow-lg), var(--glass-highlight);
+}
+
+.glass-soft {
+  background: var(--glass-bg-soft);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-highlight);
+}
+
+/* Metallic gold text — for numerals, key figures, wordmarks. Not body copy. */
+.gold-text {
+  background: var(--gold-sheen);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hairline rule that fades in from gold at the centre */
+.gold-rule {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--gold-500), transparent);
+  opacity: 0.5;
+}
+
+/* Primary CTA */
+.btn-gold {
+  position: relative;
+  background: var(--gold-sheen);
+  color: #1A150B;
+  border: 1px solid var(--gold-300);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 20px rgba(140, 111, 59, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: box-shadow 0.35s ease, transform 0.35s ease, filter 0.35s ease;
+}
+
+.btn-gold:hover {
+  filter: brightness(1.08);
+  box-shadow: var(--gold-glow-strong), 0 8px 24px rgba(140, 111, 59, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn-gold:active { transform: translateY(1px); }
+
+/* Secondary CTA — outlined gold on glass */
+.btn-gold-ghost {
+  background: var(--glass-bg-soft);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--gold-300);
+  border: 1px solid var(--glass-border-hi);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all 0.35s ease;
+}
+
+.btn-gold-ghost:hover {
+  background: rgba(201, 169, 97, 0.14);
+  color: var(--gold-200);
+  border-color: var(--gold-400);
+  box-shadow: var(--gold-glow);
+}
+
+/* Subtle animated sheen for hero/premium surfaces */
+.gold-sheen-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--gold-sheen-soft);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Browsers without backdrop-filter get solid surfaces instead of muddy ones */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass, .glass-strong { background: rgba(11, 10, 8, 0.94); }
+  .glass-soft { background: rgba(30, 26, 18, 0.92); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   COMPONENT STYLES
+   ========================================================================== */
+
 /* Navigator Container */
 .navigator-container {
   position: relative;
@@ -54,13 +222,8 @@ button {
   height: 100%;
 }
 
-.still-layer {
-  z-index: 1;
-}
-
-.video-layer {
-  z-index: 2;
-}
+.still-layer { z-index: 1; }
+.video-layer { z-index: 2; }
 
 .poster-img {
   position: absolute;
@@ -83,9 +246,7 @@ button {
   opacity: 0;
 }
 
-.poster-img.active, .clip-video.active {
-  opacity: 1;
-}
+.poster-img.active, .clip-video.active { opacity: 1; }
 
 /* Scrim */
 .bottom-scrim {
@@ -159,12 +320,13 @@ button {
   height: 8px;
   background: var(--limestone);
   border-radius: 50%;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .hotspot-marker:hover .hotspot-core,
 .hotspot-marker:focus-visible .hotspot-core {
-  background: var(--brass);
+  background: var(--gold-400);
+  box-shadow: var(--gold-glow-strong);
 }
 
 .hotspot-label-container {
@@ -184,14 +346,14 @@ button {
 
 @media (pointer: coarse) {
   .hotspot-progress { stroke-dashoffset: 0; }
-  .hotspot-core { background: var(--brass); }
+  .hotspot-core { background: var(--gold-400); box-shadow: var(--gold-glow); }
   .hotspot-label-container { opacity: 1; transform: translateY(0); }
 }
 
 .hotspot-rule {
   width: 1px;
   height: 20px;
-  background: var(--hairline);
+  background: linear-gradient(to bottom, var(--gold-500), transparent);
   margin-top: 4px;
 }
 
@@ -201,20 +363,43 @@ button {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--limestone);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
-/* Info Panel */
+/* Info Panel — glass card */
 .info-panel {
   position: absolute;
   bottom: 120px;
   left: 5%;
   max-width: 320px;
   pointer-events: auto;
+  padding: 1.75rem;
+  border-radius: 18px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-highlight);
+}
+
+@media (max-width: 640px) {
+  .info-panel {
+    bottom: 150px;
+    left: 4%;
+    right: 4%;
+    max-width: none;
+    padding: 1.25rem;
+  }
 }
 
 .panel-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  line-height: 1.1;
   margin-bottom: 0.5rem;
+  background: var(--gold-sheen);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .panel-body {
@@ -247,61 +432,75 @@ button {
   top: 0.4rem;
   width: 4px;
   height: 4px;
-  background: var(--brass);
+  background: var(--gold-400);
   border-radius: 50%;
+  box-shadow: 0 0 8px rgba(201, 169, 97, 0.7);
 }
 
 .panel-action {
-  border: 1px solid var(--brass);
-  color: var(--brass);
+  background: var(--glass-bg-soft);
+  border: 1px solid var(--glass-border-hi);
+  color: var(--gold-300);
   padding: 0.75rem 1.5rem;
   font-size: 0.875rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  letter-spacing: 0.12em;
+  border-radius: 999px;
+  transition: all 0.35s ease;
 }
 
 .panel-action:hover {
-  background: rgba(180, 145, 79, 0.1);
+  background: rgba(201, 169, 97, 0.14);
+  border-color: var(--gold-400);
+  color: var(--gold-200);
+  box-shadow: var(--gold-glow);
 }
 
-/* Jump Bar */
+/* Jump Bar — glass pill */
 .jump-bar {
   position: absolute;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   z-index: 5;
   pointer-events: auto;
-  background: var(--ink-raised);
-  padding: 0.5rem 1rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  padding: 0.5rem;
   border-radius: 2rem;
-  border: 1px solid var(--hairline);
-  max-width: 90vw;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), var(--glass-highlight);
+  max-width: 92vw;
   overflow-x: auto;
+  scrollbar-width: none;
 }
+
+.jump-bar::-webkit-scrollbar { display: none; }
 
 .jump-btn {
   font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
   color: var(--limestone-dim);
   padding: 0.5rem 1rem;
   border-radius: 1.5rem;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   white-space: nowrap;
 }
 
 .jump-btn:hover {
-  color: var(--limestone);
+  color: var(--gold-200);
+  background: rgba(201, 169, 97, 0.10);
 }
 
 .jump-btn.active {
-  background: var(--brass);
-  color: var(--ink);
+  background: var(--gold-sheen);
+  color: #1A150B;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(140, 111, 59, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .loading-screen {
@@ -312,6 +511,7 @@ button {
   align-items: center;
   font-size: 1.25rem;
   color: var(--limestone-dim);
+  background: var(--ink);
 }
 
 /* Panorama Overlay */
@@ -339,12 +539,19 @@ button {
 }
 
 .panorama-close {
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: var(--gold-200);
+  border: 1px solid var(--glass-border-hi);
   padding: 0.5rem 1rem;
-  border-radius: 4px;
-  backdrop-filter: blur(4px);
+  border-radius: 999px;
+  transition: all 0.3s ease;
+}
+
+.panorama-close:hover {
+  background: rgba(201, 169, 97, 0.16);
+  box-shadow: var(--gold-glow);
 }
 
 .panorama-error {
@@ -352,44 +559,63 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: var(--limestone);
   z-index: 51;
-  background: rgba(255, 0, 0, 0.8);
+  background: rgba(120, 30, 30, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 140, 140, 0.35);
   padding: 1rem 2rem;
-  border-radius: 4px;
+  border-radius: 12px;
 }
 
 /* Floor Plans */
 .floor-plans-container {
-  padding: 4rem 5%;
-  background: var(--ink);
+  padding: clamp(2rem, 6vw, 4rem) 5%;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(201, 169, 97, 0.07) 0%, transparent 60%),
+    var(--ink);
   min-height: 100vh;
 }
 
 .plan-tabs {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   margin-bottom: 2rem;
   border-bottom: 1px solid var(--hairline);
   padding-bottom: 1rem;
   overflow-x: auto;
+  scrollbar-width: none;
 }
 
+.plan-tabs::-webkit-scrollbar { display: none; }
+
 .plan-tab {
+  position: relative;
   color: var(--limestone-dim);
-  font-size: 1.25rem;
-  font-size: 1.25rem;
-  transition: color 0.3s;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  transition: all 0.3s;
   white-space: nowrap;
 }
 
-.plan-tab:hover, .plan-tab.active {
-  color: var(--brass);
+.plan-tab:hover {
+  color: var(--gold-300);
+  background: rgba(201, 169, 97, 0.08);
+}
+
+.plan-tab.active {
+  color: var(--gold-200);
+  background: var(--glass-bg-soft);
+  border: 1px solid var(--glass-border-hi);
+  box-shadow: var(--gold-glow);
 }
 
 .plan-details dl {
   display: flex;
-  gap: 3rem;
+  gap: clamp(1.25rem, 4vw, 3rem);
   margin-bottom: 2rem;
   flex-wrap: wrap;
 }
@@ -397,23 +623,25 @@ button {
 .plan-details dt {
   font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.12em;
   color: var(--limestone-dim);
   margin-bottom: 0.25rem;
 }
 
 .plan-details dd {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
   margin: 0;
+  color: var(--gold-200);
 }
 
 .plan-viewer {
-  background: #fff; /* Light background for plan stage */
-  border-radius: 8px;
+  background: #fff; /* Light background for plan stage — plans are line art */
+  border-radius: 14px;
   overflow: hidden;
   height: 60vh;
   position: relative;
-  border: 1px solid var(--hairline);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow-lg);
 }
 
 .plan-controls {
@@ -426,15 +654,23 @@ button {
 }
 
 .plan-controls button {
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: var(--gold-200);
+  border: 1px solid var(--glass-border-hi);
   width: 40px;
   height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.plan-controls button:hover {
+  background: rgba(201, 169, 97, 0.20);
+  box-shadow: var(--gold-glow);
 }
 
 .plan-image {
@@ -459,13 +695,20 @@ button {
 }
 
 .map-legend {
-  background: var(--ink-raised);
-  padding: 2rem;
+  background:
+    linear-gradient(180deg, rgba(201, 169, 97, 0.06) 0%, transparent 40%),
+    var(--ink-raised);
+  border-right: 1px solid var(--hairline);
+  padding: clamp(1.25rem, 4vw, 2rem);
 }
 
 .map-legend h3 {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
   margin-bottom: 2rem;
+  background: var(--gold-sheen);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .map-legend ul {
@@ -481,13 +724,15 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   border-bottom: 1px solid var(--hairline);
   padding-bottom: 1rem;
 }
 
 .drive-time {
-  color: var(--brass);
+  color: var(--gold-300);
   font-size: 0.875rem;
+  white-space: nowrap;
 }
 
 .map-wrapper {
@@ -502,8 +747,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0f0f0;
-  color: #333;
+  background: var(--ink-raised);
+  color: var(--limestone-dim);
 }
 
 /* MapLibre Overrides for Ghost Glass */
@@ -520,3 +765,7 @@ button {
 .maplibregl-popup, .mapboxgl-popup {
   z-index: 60 !important;
 }
+
+/* Utility used inline by the nav dial */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

@@ -118,18 +118,18 @@ export const LocationMap: React.FC<LocationMapProps> = ({ pins, onClose }) => {
   };
 
   return (
-    <div ref={containerRef} className="fixed inset-0 z-50 bg-black/30 flex flex-col pointer-events-auto">
+    <div ref={containerRef} className="fixed inset-0 z-50 bg-[rgba(11,10,8,0.35)] flex flex-col pointer-events-auto">
       
       {/* Top Header & Close */}
       <div className="absolute top-0 left-0 right-0 p-4 md:p-8 flex justify-between items-center z-20 pointer-events-none">
-        <div className="bg-white/10 backdrop-blur-2xl px-6 py-3 rounded-full border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] pointer-events-auto">
-          <span className="text-white font-medium tracking-wide text-sm uppercase">Location Map</span>
+        <div className="bg-[rgba(246,231,188,0.08)] backdrop-blur-2xl px-6 py-3 rounded-full border border-[rgba(201,169,97,0.28)] shadow-[inset_0_1px_1px_rgba(246,231,188,0.2)] pointer-events-auto">
+          <span className="text-[var(--gold-200)] font-medium tracking-[0.18em] text-sm uppercase">Location Map</span>
         </div>
         
         <MagneticWrapper className="pointer-events-auto">
           <button 
             onClick={handleClose}
-            className="group p-3 rounded-full bg-white/10 text-white hover:bg-white hover:text-black backdrop-blur-2xl border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] transition-colors"
+            className="group p-3 rounded-full bg-[rgba(246,231,188,0.08)] text-white hover:bg-[var(--gold-300)] hover:text-[#1A150B] backdrop-blur-2xl border border-[rgba(201,169,97,0.28)] shadow-[inset_0_1px_1px_rgba(246,231,188,0.2)] transition-colors"
           >
             <X size={20} className="transition-transform duration-500 group-hover:rotate-90" />
           </button>
@@ -138,8 +138,8 @@ export const LocationMap: React.FC<LocationMapProps> = ({ pins, onClose }) => {
 
       <div className="flex-1 w-full h-full relative p-4 md:p-8 pt-24 md:pt-28 pb-4 md:pb-8 flex flex-col md:flex-row gap-4 md:gap-8 max-w-[1600px] mx-auto">
         {/* Legend Sidebar */}
-        <div ref={sidebarRef} className="w-full md:w-[350px] shrink-0 bg-black/20 backdrop-blur-3xl border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.2)] rounded-3xl p-5 md:p-6 flex flex-col relative z-10 overflow-hidden max-h-[35vh] md:max-h-none">
-          <div className="flex items-center gap-3 mb-4 md:mb-6 pb-3 md:pb-4 border-b border-white/10">
+        <div ref={sidebarRef} className="w-full md:w-[350px] shrink-0 bg-[rgba(11,10,8,0.25)] backdrop-blur-3xl border border-[rgba(201,169,97,0.18)] shadow-[0_30px_60px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(246,231,188,0.2)] rounded-3xl p-5 md:p-6 flex flex-col relative z-10 overflow-hidden max-h-[35vh] md:max-h-none">
+          <div className="flex items-center gap-3 mb-4 md:mb-6 pb-3 md:pb-4 border-b border-[rgba(201,169,97,0.18)]">
             <MapIcon size={20} className="text-white/80 shrink-0" />
             <h3 className="text-white font-bold tracking-widest uppercase text-xs md:text-sm">Nearby Landmarks</h3>
           </div>
@@ -172,12 +172,12 @@ export const LocationMap: React.FC<LocationMapProps> = ({ pins, onClose }) => {
                         }}
                       >
                         <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 md:w-6 md:h-6 shrink-0 rounded-full border flex items-center justify-center text-[9px] md:text-[10px] font-bold transition-colors ${hoveredPinId === pin.id ? 'bg-white text-black border-white' : 'bg-white/10 border-white/20 text-white group-hover:bg-white group-hover:text-black group-hover:border-white'}`}>
+                          <div className={`w-5 h-5 md:w-6 md:h-6 shrink-0 rounded-full border flex items-center justify-center text-[9px] md:text-[10px] font-bold transition-colors ${hoveredPinId === pin.id ? 'bg-[var(--gold-300)] text-[#1A150B] border-[var(--gold-100)]' : 'bg-[rgba(246,231,188,0.08)] border-[rgba(201,169,97,0.28)] text-white group-hover:bg-[var(--gold-300)] group-hover:text-[#1A150B] group-hover:border-[var(--gold-100)]'}`}>
                             {globalIndex + 1}
                           </div>
-                          <span className={`text-xs md:text-sm font-medium transition-colors ${hoveredPinId === pin.id ? 'text-white' : 'text-white/80 group-hover:text-white'}`}>{pin.label}</span>
+                          <span className={`text-xs md:text-sm font-medium transition-colors ${hoveredPinId === pin.id ? 'text-[var(--gold-200)]' : 'text-white/80 group-hover:text-[var(--gold-200)]'}`}>{pin.label}</span>
                         </div>
-                        <span className={`text-[10px] md:text-xs font-bold tracking-wider transition-colors whitespace-nowrap ml-2 ${hoveredPinId === pin.id ? 'text-white' : 'text-white/50 group-hover:text-white/80'}`}>{pin.driveTime}</span>
+                        <span className={`text-[10px] md:text-xs font-bold tracking-wider transition-colors whitespace-nowrap ml-2 ${hoveredPinId === pin.id ? 'text-[var(--gold-300)]' : 'text-[rgba(201,169,97,0.6)] group-hover:text-[var(--gold-300)]'}`}>{pin.driveTime}</span>
                       </li>
                     );
                   })}
@@ -188,7 +188,7 @@ export const LocationMap: React.FC<LocationMapProps> = ({ pins, onClose }) => {
         </div>
         
         {/* Interactive Map */}
-        <div className="flex-1 bg-white/5 rounded-3xl border border-white/10 overflow-hidden relative shadow-inner">
+        <div className="flex-1 bg-[rgba(246,231,188,0.05)] rounded-3xl border border-[rgba(201,169,97,0.18)] overflow-hidden relative shadow-inner">
           <MapCanvas pins={pins} hoveredPinId={hoveredPinId} />
         </div>
       </div>

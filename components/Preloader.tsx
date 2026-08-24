@@ -61,14 +61,26 @@ export const Preloader: React.FC<PreloaderProps> = ({ isReady, onComplete }) => 
   }, [isReady, onComplete]);
 
   return (
-    <div ref={containerRef} className="fixed inset-0 z-[100] flex items-center justify-center bg-black">
-      <div className="flex flex-col items-center gap-6">
-        <div className="text-[10px] uppercase tracking-[0.5em] font-bold text-white/50">
+    <div
+      ref={containerRef}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
+    >
+      <div className="relative flex flex-col items-center gap-6 px-6 text-center">
+        <div className="text-[10px] uppercase tracking-[0.5em] font-bold text-white/40">
           Loading Experience
         </div>
-        <div ref={counterRef} className="text-white text-8xl font-light tracking-tighter">
+        <div
+          ref={counterRef}
+          className="text-white text-6xl sm:text-7xl md:text-8xl font-light tracking-tighter tabular-nums"
+        >
           0%
         </div>
+        <div className="w-40 sm:w-56 h-px bg-white/20" />
+
+        <p className="text-[11px] sm:text-xs tracking-[0.28em] uppercase text-white/50 font-light">
+          Your DCC property is loading
+          <span className="inline-block ml-[2px] animate-pulse">...</span>
+        </p>
       </div>
     </div>
   );

@@ -263,7 +263,7 @@ export const VideoNavigator: React.FC<{ project: ProjectConfig }> = ({ project }
                 <button 
                   onClick={handlePrevVideo}
                   disabled={isTransitioning}
-                  className="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-black/20 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] text-white hover:bg-white/20 transition-all group disabled:opacity-50"
+                  className="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-[rgba(11,10,8,0.45)] backdrop-blur-xl border border-[rgba(201,169,97,0.28)] shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(246,231,188,0.18)] text-[var(--gold-200)] hover:bg-[rgba(201,169,97,0.18)] hover:border-[var(--gold-400)] hover:shadow-[0_0_28px_rgba(201,169,97,0.35),inset_0_1px_0_rgba(246,231,188,0.25)] transition-all group disabled:opacity-50"
                 >
                   <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 group-hover:-translate-x-1 transition-transform" />
                 </button>
@@ -276,7 +276,7 @@ export const VideoNavigator: React.FC<{ project: ProjectConfig }> = ({ project }
                 <button 
                   onClick={handleNextVideo}
                   disabled={isTransitioning}
-                  className="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-black/20 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)] text-white hover:bg-white/20 transition-all group disabled:opacity-50"
+                  className="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-[rgba(11,10,8,0.45)] backdrop-blur-xl border border-[rgba(201,169,97,0.28)] shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(246,231,188,0.18)] text-[var(--gold-200)] hover:bg-[rgba(201,169,97,0.18)] hover:border-[var(--gold-400)] hover:shadow-[0_0_28px_rgba(201,169,97,0.35),inset_0_1px_0_rgba(246,231,188,0.25)] transition-all group disabled:opacity-50"
                 >
                   <ChevronRight className="w-6 h-6 md:w-8 md:h-8 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -302,12 +302,12 @@ export const VideoNavigator: React.FC<{ project: ProjectConfig }> = ({ project }
           <button 
             onClick={() => setShowContact(true)}
             disabled={showContact}
-            className="group relative flex items-center h-10 w-10 md:h-12 md:w-12 rounded-full backdrop-blur-2xl bg-white/10 border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:w-[105px] md:hover:w-[125px] hover:bg-white/20"
+            className="group relative flex items-center h-10 w-10 md:h-12 md:w-12 rounded-full backdrop-blur-2xl bg-[rgba(246,231,188,0.08)] border border-[rgba(201,169,97,0.28)] shadow-[inset_0_1px_1px_rgba(246,231,188,0.2)] overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:w-[105px] md:hover:w-[125px] hover:bg-[rgba(246,231,188,0.14)]"
           >
             <div className="absolute left-0 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center shrink-0">
-              <Phone size={16} className="text-white opacity-80 group-hover:opacity-100 transition-opacity md:w-[18px] md:h-[18px]" />
+              <Phone size={16} className="text-[var(--gold-300)] opacity-90 group-hover:opacity-100 group-hover:text-[var(--gold-200)] transition-colors md:w-[18px] md:h-[18px]" />
             </div>
-            <span className="absolute left-8 md:left-10 text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-white opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] whitespace-nowrap">Contact</span>
+            <span className="absolute left-8 md:left-10 text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-[var(--gold-200)] opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] whitespace-nowrap">Contact</span>
           </button>
         </MagneticWrapper>
       </div>

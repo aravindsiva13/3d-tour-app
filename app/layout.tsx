@@ -27,6 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Warm the TLS handshakes to the basemap + tile CDNs before the map
+            chunk is even requested. Saves ~1 RTT each on first map open. */}
+        <link rel="preconnect" href="https://basemaps.cartocdn.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://a.basemaps.cartocdn.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://b.basemaps.cartocdn.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com" />
+        <link rel="dns-prefetch" href="https://d.basemaps.cartocdn.com" />
+        <link rel="dns-prefetch" href="https://server.arcgisonline.com" />
+      </head>
       <body className={`${inter.variable}`} suppressHydrationWarning>
         {children}
       </body>

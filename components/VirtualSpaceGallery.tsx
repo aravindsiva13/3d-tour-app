@@ -114,18 +114,18 @@ export const VirtualSpaceGallery: React.FC<VirtualSpaceGalleryProps> = ({ nodes,
   }, [isClosing]);
 
   return (
-    <div ref={containerRef} className="absolute inset-0 z-50 flex flex-col bg-black/90 backdrop-blur-xl opacity-0 overflow-y-auto">
+    <div ref={containerRef} className="absolute inset-0 z-50 flex flex-col bg-[rgba(11,10,8,0.90)] backdrop-blur-xl opacity-0 overflow-y-auto">
       
       {/* Top Controls */}
       <div className="sticky top-0 left-0 right-0 p-8 flex justify-between items-center z-20 pointer-events-none gsap-ui">
-        <div className="bg-white/10 backdrop-blur-2xl px-6 py-3 rounded-full border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] pointer-events-auto">
-          <span className="text-white font-medium tracking-wide text-sm uppercase">Virtual Space</span>
+        <div className="bg-[rgba(246,231,188,0.08)] backdrop-blur-2xl px-6 py-3 rounded-full border border-[rgba(201,169,97,0.28)] shadow-[inset_0_1px_1px_rgba(246,231,188,0.2)] pointer-events-auto">
+          <span className="text-[var(--gold-200)] font-medium tracking-[0.18em] text-sm uppercase">Virtual Space</span>
         </div>
         
         <MagneticWrapper className="pointer-events-auto">
           <button 
             onClick={handleClose}
-            className="group p-3 rounded-full bg-white/10 text-white hover:bg-white hover:text-black backdrop-blur-2xl border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] transition-colors"
+            className="group p-3 rounded-full bg-[rgba(246,231,188,0.08)] text-white hover:bg-[var(--gold-300)] hover:text-[#1A150B] backdrop-blur-2xl border border-[rgba(201,169,97,0.28)] shadow-[inset_0_1px_1px_rgba(246,231,188,0.2)] transition-colors"
           >
             <X size={20} className="transition-transform duration-500 group-hover:rotate-90" />
           </button>
@@ -139,7 +139,7 @@ export const VirtualSpaceGallery: React.FC<VirtualSpaceGalleryProps> = ({ nodes,
             <button
               key={id}
               onClick={() => handleSelect(id)}
-              className="gallery-card group relative aspect-[3/2] rounded-3xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/30 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.1)] text-left focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="gallery-card group relative aspect-[3/2] rounded-3xl overflow-hidden bg-[rgba(246,231,188,0.05)] border border-[rgba(201,169,97,0.18)] hover:border-[rgba(201,169,97,0.38)] transition-all duration-500 hover:shadow-[0_0_40px_rgba(246,231,188,0.1)] text-left focus:outline-none focus:ring-2 focus:ring-white/50"
             >
               {/* Background Image */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -150,7 +150,7 @@ export const VirtualSpaceGallery: React.FC<VirtualSpaceGalleryProps> = ({ nodes,
               />
               
               {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(6,6,5,0.85)] via-[rgba(6,6,5,0.25)] to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
               
               {/* Text Content */}
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">

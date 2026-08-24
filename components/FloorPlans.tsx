@@ -207,18 +207,18 @@ export const FloorPlans: React.FC<FloorPlansProps> = ({ plans, onClose }) => {
   const activePlan = plans.find(p => p.id === activePlanId) || plans[0];
 
   return (
-    <div ref={containerRef} className="fixed inset-0 z-50 bg-black/30 flex flex-col pointer-events-auto">
+    <div ref={containerRef} className="fixed inset-0 z-50 bg-[rgba(11,10,8,0.35)] flex flex-col pointer-events-auto">
       
       {/* Top Header & Close */}
       <div className="absolute top-0 left-0 right-0 p-4 md:p-8 flex justify-between items-center z-20">
-        <div className="bg-white/10 backdrop-blur-2xl px-6 py-3 rounded-full border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]">
-          <span className="text-white font-medium tracking-wide text-sm uppercase">Floor Plans</span>
+        <div className="bg-[rgba(246,231,188,0.08)] backdrop-blur-2xl px-6 py-3 rounded-full border border-[rgba(201,169,97,0.28)] shadow-[inset_0_1px_1px_rgba(246,231,188,0.2)]">
+          <span className="text-[var(--gold-200)] font-medium tracking-[0.18em] text-sm uppercase">Floor Plans</span>
         </div>
         
         <MagneticWrapper>
           <button 
             onClick={handleClose}
-            className="group p-3 rounded-full bg-white/10 text-white hover:bg-white hover:text-black backdrop-blur-2xl border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] transition-colors"
+            className="group p-3 rounded-full bg-[rgba(246,231,188,0.08)] text-white hover:bg-[var(--gold-300)] hover:text-[#1A150B] backdrop-blur-2xl border border-[rgba(201,169,97,0.28)] shadow-[inset_0_1px_1px_rgba(246,231,188,0.2)] transition-colors"
           >
             <X size={20} className="transition-transform duration-500 group-hover:rotate-90" />
           </button>
@@ -238,8 +238,8 @@ export const FloorPlans: React.FC<FloorPlansProps> = ({ plans, onClose }) => {
               <div 
                 className={`transition-all duration-500 ease-out ${
                   activePlanId === plan.id 
-                    ? 'w-8 h-[2px] md:w-[2px] md:h-8 bg-white shadow-[0_0_12px_rgba(255,255,255,0.8)]' 
-                    : 'w-4 h-[2px] md:w-[2px] md:h-4 bg-white/20 group-hover:bg-white/50 group-hover:w-6 md:group-hover:h-6'
+                    ? 'w-8 h-[2px] md:w-[2px] md:h-8 bg-[var(--gold-300)] shadow-[0_0_12px_rgba(246,231,188,0.8)]' 
+                    : 'w-4 h-[2px] md:w-[2px] md:h-4 bg-[rgba(246,231,188,0.14)] group-hover:bg-[rgba(246,231,188,0.32)] group-hover:w-6 md:group-hover:h-6'
                 }`}
               />
               {/* Animated Text */}
@@ -258,7 +258,7 @@ export const FloorPlans: React.FC<FloorPlansProps> = ({ plans, onClose }) => {
         
         {/* Details Panel */}
         <TiltWrapper className="absolute left-4 right-4 md:left-8 md:right-auto bottom-4 md:bottom-8 z-20 pointer-events-auto">
-          <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-5 md:p-7 text-white shadow-[0_20px_40px_rgba(0,0,0,0.4),inset_0_1px_1px_rgba(255,255,255,0.2)]">
+          <div className="bg-[rgba(246,231,188,0.08)] backdrop-blur-2xl border border-[rgba(201,169,97,0.28)] rounded-3xl p-5 md:p-7 text-white shadow-[0_20px_40px_rgba(0,0,0,0.4),inset_0_1px_1px_rgba(246,231,188,0.2)]">
             <dl ref={detailsRef} className="flex flex-row md:flex-col justify-between gap-2 md:gap-5">
               <div className="flex flex-col items-center md:items-start">
                 <dt className="text-white/60 text-[8px] md:text-[10px] font-bold tracking-widest uppercase mb-1">Carpet Area</dt>
@@ -277,7 +277,7 @@ export const FloorPlans: React.FC<FloorPlansProps> = ({ plans, onClose }) => {
         </TiltWrapper>
 
         {/* Pan/Zoom Viewer */}
-        <div className="flex-1 bg-white/5 rounded-3xl border border-white/10 overflow-hidden relative shadow-inner flex items-center justify-center">
+        <div className="flex-1 bg-[rgba(246,231,188,0.05)] rounded-3xl border border-[rgba(201,169,97,0.18)] overflow-hidden relative shadow-inner flex items-center justify-center">
           <TransformWrapper
             key={activePlanId}
             initialScale={1}
@@ -290,21 +290,21 @@ export const FloorPlans: React.FC<FloorPlansProps> = ({ plans, onClose }) => {
               <>
                 {/* Unified Vertical Zoom Controls */}
                 <div className="absolute right-4 md:right-8 bottom-32 md:bottom-8 z-20 pointer-events-auto">
-                  <div className="flex flex-col bg-white/5 backdrop-blur-3xl border border-white/20 rounded-full shadow-[0_20px_40px_rgba(0,0,0,0.4),inset_0_1px_1px_rgba(255,255,255,0.3)] overflow-hidden">
+                  <div className="flex flex-col bg-[rgba(246,231,188,0.05)] backdrop-blur-3xl border border-[rgba(201,169,97,0.28)] rounded-full shadow-[0_20px_40px_rgba(0,0,0,0.4),inset_0_1px_1px_rgba(246,231,188,0.3)] overflow-hidden">
                     <button 
-                      className="w-12 h-12 flex items-center justify-center text-white hover:bg-white/20 active:bg-white/40 transition-colors border-b border-white/10" 
+                      className="w-12 h-12 flex items-center justify-center text-white hover:bg-[rgba(246,231,188,0.14)] active:bg-[rgba(246,231,188,0.26)] transition-colors border-b border-[rgba(201,169,97,0.18)]" 
                       onClick={() => zoomIn()}
                     >
                       <ZoomIn size={18} />
                     </button>
                     <button 
-                      className="w-12 h-12 flex items-center justify-center text-white hover:bg-white/20 active:bg-white/40 transition-colors border-b border-white/10" 
+                      className="w-12 h-12 flex items-center justify-center text-white hover:bg-[rgba(246,231,188,0.14)] active:bg-[rgba(246,231,188,0.26)] transition-colors border-b border-[rgba(201,169,97,0.18)]" 
                       onClick={() => resetTransform()}
                     >
                       <Focus size={18} />
                     </button>
                     <button 
-                      className="w-12 h-12 flex items-center justify-center text-white hover:bg-white/20 active:bg-white/40 transition-colors" 
+                      className="w-12 h-12 flex items-center justify-center text-white hover:bg-[rgba(246,231,188,0.14)] active:bg-[rgba(246,231,188,0.26)] transition-colors" 
                       onClick={() => zoomOut()}
                     >
                       <ZoomOut size={18} />
@@ -339,16 +339,16 @@ export const FloorPlans: React.FC<FloorPlansProps> = ({ plans, onClose }) => {
                       >
                         <div className="relative flex items-center justify-center w-10 h-10 cursor-pointer">
                           {/* Pulsating Ring (Darker for contrast) */}
-                          <div className="absolute inset-1 bg-black/20 border border-black/10 rounded-full animate-ping" />
+                          <div className="absolute inset-1 bg-[rgba(11,10,8,0.25)] border border-black/10 rounded-full animate-ping" />
                           
                           {/* Apple-style Dark Glass Marker */}
-                          <div className="relative w-7 h-7 bg-black/40 backdrop-blur-xl rounded-full shadow-[0_8px_16px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.2)] border border-white/20 flex items-center justify-center text-white group-hover:scale-125 group-hover:bg-black/60 transition-all duration-300">
+                          <div className="relative w-7 h-7 bg-[rgba(11,10,8,0.45)] backdrop-blur-xl rounded-full shadow-[0_8px_16px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(246,231,188,0.2)] border border-[rgba(201,169,97,0.28)] flex items-center justify-center text-white group-hover:scale-125 group-hover:bg-[rgba(11,10,8,0.60)] transition-all duration-300">
                             <MapPin size={14} className="text-white drop-shadow-md" />
                           </div>
                         </div>
                         
                         {/* Apple-style Dark Glass Label */}
-                        <span className="absolute top-12 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-bold tracking-[0.2em] text-white bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_8px_16px_rgba(0,0,0,0.5)] px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 uppercase scale-95 group-hover:scale-100">
+                        <span className="absolute top-12 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-bold tracking-[0.2em] text-white bg-[rgba(11,10,8,0.60)] backdrop-blur-xl border border-[rgba(201,169,97,0.18)] shadow-[0_8px_16px_rgba(0,0,0,0.5)] px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 uppercase scale-95 group-hover:scale-100">
                           {hotspot.title}
                         </span>
                       </button>
@@ -363,8 +363,8 @@ export const FloorPlans: React.FC<FloorPlansProps> = ({ plans, onClose }) => {
 
       {/* Hotspot Photo Gallery Modal */}
       {activeHotspot && (
-        <div ref={modalContainerRef} className="absolute inset-0 z-[60] bg-black/80 backdrop-blur-xl flex items-center justify-center pointer-events-auto p-4 md:p-8 opacity-0">
-          <div ref={modalContentRef} className="relative w-full max-w-5xl h-auto aspect-square md:aspect-video bg-black rounded-2xl border border-white/20 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] opacity-0">
+        <div ref={modalContainerRef} className="absolute inset-0 z-[60] bg-[rgba(11,10,8,0.80)] backdrop-blur-xl flex items-center justify-center pointer-events-auto p-4 md:p-8 opacity-0">
+          <div ref={modalContentRef} className="relative w-full max-w-5xl h-auto aspect-square md:aspect-video bg-[var(--ink-deep)] rounded-2xl border border-[rgba(201,169,97,0.28)] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] opacity-0">
             
             {/* Gallery Images (Mapped for Crossfade) */}
             {activeHotspot.images.map((imgSrc, idx) => (
@@ -383,10 +383,10 @@ export const FloorPlans: React.FC<FloorPlansProps> = ({ plans, onClose }) => {
             ))}
 
             {/* Gradient Scrims for text and button readability on bright images */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent pointer-events-none h-32" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent pointer-events-none w-32" />
-            <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-transparent to-transparent pointer-events-none w-32 right-0 left-auto" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(6,6,5,0.92)] via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[rgba(6,6,5,0.75)] via-transparent to-transparent pointer-events-none h-32" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[rgba(6,6,5,0.75)] via-transparent to-transparent pointer-events-none w-32" />
+            <div className="absolute inset-0 bg-gradient-to-l from-[rgba(6,6,5,0.75)] via-transparent to-transparent pointer-events-none w-32 right-0 left-auto" />
 
             {/* Title */}
             <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 pointer-events-none">
@@ -397,7 +397,7 @@ export const FloorPlans: React.FC<FloorPlansProps> = ({ plans, onClose }) => {
             {/* Close Button */}
             <button 
               onClick={handleCloseHotspot}
-              className="absolute top-4 right-4 md:top-6 md:right-6 p-3 md:p-4 rounded-full bg-black/80 text-white hover:bg-white hover:text-black backdrop-blur-xl border border-white/20 transition-colors z-20 shadow-2xl"
+              className="absolute top-4 right-4 md:top-6 md:right-6 p-3 md:p-4 rounded-full bg-[rgba(11,10,8,0.80)] text-white hover:bg-[var(--gold-300)] hover:text-[#1A150B] backdrop-blur-xl border border-[rgba(201,169,97,0.28)] transition-colors z-20 shadow-2xl"
             >
               <X size={24} />
             </button>
@@ -407,13 +407,13 @@ export const FloorPlans: React.FC<FloorPlansProps> = ({ plans, onClose }) => {
               <>
                 <button 
                   onClick={(e) => { e.stopPropagation(); setHotspotImageIndex((prev) => (prev - 1 + activeHotspot.images.length) % activeHotspot.images.length); }}
-                  className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-4 md:p-5 rounded-full bg-black/80 text-white hover:bg-white hover:text-black backdrop-blur-xl border border-white/20 transition-all z-20 group shadow-2xl"
+                  className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-4 md:p-5 rounded-full bg-[rgba(11,10,8,0.80)] text-white hover:bg-[var(--gold-300)] hover:text-[#1A150B] backdrop-blur-xl border border-[rgba(201,169,97,0.28)] transition-all z-20 group shadow-2xl"
                 >
                   <ChevronLeft size={32} className="group-hover:-translate-x-1 transition-transform drop-shadow-md" />
                 </button>
                 <button 
                   onClick={(e) => { e.stopPropagation(); setHotspotImageIndex((prev) => (prev + 1) % activeHotspot.images.length); }}
-                  className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-4 md:p-5 rounded-full bg-black/80 text-white hover:bg-white hover:text-black backdrop-blur-xl border border-white/20 transition-all z-20 group shadow-2xl"
+                  className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-4 md:p-5 rounded-full bg-[rgba(11,10,8,0.80)] text-white hover:bg-[var(--gold-300)] hover:text-[#1A150B] backdrop-blur-xl border border-[rgba(201,169,97,0.28)] transition-all z-20 group shadow-2xl"
                 >
                   <ChevronRight size={32} className="group-hover:translate-x-1 transition-transform drop-shadow-md" />
                 </button>

@@ -160,7 +160,7 @@ export const GalleryOverlay: React.FC<GalleryOverlayProps> = ({ gallery, onClose
   }, [images.length, isClosing]);
 
   return (
-    <div ref={containerRef} className="absolute inset-0 z-50 flex bg-black opacity-0">
+    <div ref={containerRef} className="absolute inset-0 z-50 flex bg-[var(--ink-deep)] opacity-0">
       
       {/* Fullscreen Background Images */}
       {images.map((imgSrc, idx) => (
@@ -186,14 +186,14 @@ export const GalleryOverlay: React.FC<GalleryOverlayProps> = ({ gallery, onClose
 
       {/* Top Controls */}
       <div className="absolute top-0 left-0 right-0 p-8 flex justify-between items-center z-20 pointer-events-none gsap-ui">
-        <div className="bg-white/10 backdrop-blur-2xl px-6 py-3 rounded-full border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] pointer-events-auto">
-          <span className="text-white font-medium tracking-wide text-sm uppercase">Gallery</span>
+        <div className="bg-[rgba(246,231,188,0.08)] backdrop-blur-2xl px-6 py-3 rounded-full border border-[rgba(201,169,97,0.28)] shadow-[inset_0_1px_1px_rgba(246,231,188,0.2)] pointer-events-auto">
+          <span className="text-[var(--gold-200)] font-medium tracking-[0.18em] text-sm uppercase">Gallery</span>
         </div>
         
         <MagneticWrapper className="pointer-events-auto">
           <button 
             onClick={handleClose}
-            className="group p-3 rounded-full bg-white/10 text-white hover:bg-white hover:text-black backdrop-blur-2xl border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] transition-colors"
+            className="group p-3 rounded-full bg-[rgba(246,231,188,0.08)] text-white hover:bg-[var(--gold-300)] hover:text-[#1A150B] backdrop-blur-2xl border border-[rgba(201,169,97,0.28)] shadow-[inset_0_1px_1px_rgba(246,231,188,0.2)] transition-colors"
           >
             <X size={20} className="transition-transform duration-500 group-hover:rotate-90" />
           </button>
@@ -207,15 +207,15 @@ export const GalleryOverlay: React.FC<GalleryOverlayProps> = ({ gallery, onClose
             <ChevronUp size={28} />
           </button>
           
-          <div className="gsap-ui bg-white/10 backdrop-blur-2xl rounded-full p-2 flex flex-col gap-2 border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] max-h-[50vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <div className="gsap-ui bg-[rgba(246,231,188,0.08)] backdrop-blur-2xl rounded-full p-2 flex flex-col gap-2 border border-[rgba(201,169,97,0.28)] shadow-[inset_0_1px_1px_rgba(246,231,188,0.2)] max-h-[50vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {images.map((_, idx) => (
               <button 
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
                 className={`w-[48px] h-[48px] md:w-[60px] md:h-[60px] rounded-full flex flex-col items-center justify-center shrink-0 transition-all duration-300 ${
                   currentIndex === idx 
-                    ? 'bg-white/20 border border-white/30 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)]' 
-                    : 'bg-transparent text-white/70 hover:bg-white/10 hover:text-white'
+                    ? 'bg-[rgba(201,169,97,0.20)] border border-[var(--gold-400)] text-[var(--gold-100)] shadow-[0_0_18px_rgba(201,169,97,0.35),inset_0_1px_1px_rgba(246,231,188,0.35)]' 
+                    : 'bg-transparent text-white/70 hover:bg-[rgba(246,231,188,0.08)] hover:text-white'
                 }`}
               >
                 <span className="text-[8px] md:text-[9px] uppercase font-bold tracking-widest leading-none mb-1">View</span>
@@ -232,14 +232,14 @@ export const GalleryOverlay: React.FC<GalleryOverlayProps> = ({ gallery, onClose
 
       {/* Bottom Tabs (Interior / Exterior) */}
       <div className="absolute bottom-0 left-0 right-0 z-40 flex justify-center pb-8 md:pb-12 pointer-events-auto">
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[rgba(6,6,5,0.75)] to-transparent pointer-events-none" />
         
-        <div className="relative z-10 flex items-center gap-6 md:gap-12 px-8 py-4 bg-black/20 backdrop-blur-xl border border-white/10 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+        <div className="relative z-10 flex items-center gap-6 md:gap-12 px-8 py-4 bg-[rgba(11,10,8,0.25)] backdrop-blur-xl border border-[rgba(201,169,97,0.18)] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
           <button
             onClick={() => setActiveTab('interior')}
             className={`relative flex flex-col items-center justify-center transition-all duration-500 ease-out shrink-0 group`}
           >
-            <span className={`text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase whitespace-nowrap transition-colors duration-500 inline-block pb-2 ${activeTab === 'interior' ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]' : 'text-white/40 group-hover:text-white/80'}`}>
+            <span className={`text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase whitespace-nowrap transition-colors duration-500 inline-block pb-2 ${activeTab === 'interior' ? 'text-white drop-shadow-[0_0_8px_rgba(246,231,188,0.4)]' : 'text-white/40 group-hover:text-white/80'}`}>
               Interior
             </span>
 
@@ -249,7 +249,7 @@ export const GalleryOverlay: React.FC<GalleryOverlayProps> = ({ gallery, onClose
             onClick={() => setActiveTab('exterior')}
             className={`relative flex flex-col items-center justify-center transition-all duration-500 ease-out shrink-0 group`}
           >
-            <span className={`text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase whitespace-nowrap transition-colors duration-500 inline-block pb-2 ${activeTab === 'exterior' ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]' : 'text-white/40 group-hover:text-white/80'}`}>
+            <span className={`text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase whitespace-nowrap transition-colors duration-500 inline-block pb-2 ${activeTab === 'exterior' ? 'text-white drop-shadow-[0_0_8px_rgba(246,231,188,0.4)]' : 'text-white/40 group-hover:text-white/80'}`}>
               Exterior
             </span>
 

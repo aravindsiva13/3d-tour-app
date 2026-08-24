@@ -65,11 +65,15 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ activeTab, onSelectTab }) 
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[rgba(6,6,5,0.8)] to-transparent pointer-events-none" />
 
-      <div 
-        ref={dialRef} 
-        className="relative z-10 flex items-center gap-6 md:gap-12 px-8 py-4 bg-black/20 backdrop-blur-xl border border-white/10 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.3)] max-w-[90vw] overflow-x-auto scrollbar-hide"
+      <div
+        ref={dialRef}
+        /* py-5 (not py-4): the labels used to carry an 8px pb-2 to clear the
+           underline, so dropping that would have shortened the pill by 8px.
+           16+8+16 -> 20+0+20 keeps the bar exactly the same height, with the
+           space now split evenly above and below the text. */
+        className="relative z-10 flex items-center gap-6 md:gap-10 px-6 md:px-8 py-5 bg-[rgba(11,10,8,0.55)] backdrop-blur-xl border border-[rgba(201,169,97,0.28)] rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(246,231,188,0.18)] max-w-[92vw] overflow-x-auto scrollbar-hide"
       >
           {tabs.map((tab, index) => {
             const isActive = index === activeIndex;
@@ -78,14 +82,14 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ activeTab, onSelectTab }) 
               <button 
                 key={tab.id} 
                 onClick={() => onSelectTab(tab.id)}
-                className={`relative flex flex-col items-center justify-center transition-all duration-500 ease-out shrink-0 group ${isActive ? 'dial-item-active' : ''}`}
+                className={`relative flex items-center justify-center transition-all duration-500 ease-out shrink-0 group ${isActive ? 'dial-item-active' : ''}`}
                 style={{ pointerEvents: 'auto' }}
               >
-                <span 
-                  className={`dial-text text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase whitespace-nowrap transition-colors duration-500 inline-block pb-2 ${
-                    isActive 
-                      ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]' 
-                      : 'text-white/40 group-hover:text-white/80'
+                <span
+                  className={`dial-text text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase whitespace-nowrap transition-colors duration-500 inline-block ${
+                    isActive
+                      ? 'text-[var(--gold-200)] drop-shadow-[0_0_10px_rgba(201,169,97,0.55)]'
+                      : 'text-[rgba(243,240,233,0.45)] group-hover:text-[var(--gold-300)]'
                   }`}
                 >
                   {tab.label}
